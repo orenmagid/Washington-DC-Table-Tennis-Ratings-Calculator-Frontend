@@ -19,7 +19,6 @@ export default class SessionTable extends Component {
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Session Date</Table.HeaderCell>
-              <Table.HeaderCell>Group</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
 
@@ -34,7 +33,6 @@ export default class SessionTable extends Component {
                   <Table.Cell>
                     {new Date(session.date).toDateString()}
                   </Table.Cell>
-                  <Table.Cell>{session.group.name}</Table.Cell>
                 </Table.Row>
               )
             })}

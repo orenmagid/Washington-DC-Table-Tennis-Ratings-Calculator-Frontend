@@ -1,19 +1,20 @@
 import React, { Component, Fragment } from 'react'
-import { Router, Link } from '@reach/router'
+import { Router, Link, navigate } from '@reach/router'
 import { baseUrl, HEADERS } from './constants'
 import { Container, Segment, Header, Button, Message } from 'semantic-ui-react'
 import Nav from './components/Nav'
 import PlayerContainer from './containers/PlayerContainer'
-import GroupContainer from './containers/GroupContainer'
 import SessionContainer from './containers/SessionContainer'
+import MyProfileContainer from './containers/MyProfileContainer'
 import LoginForm from './components/LoginForm'
 import CalculateRatings from './components/CalculateRatings'
+import { isLoggedIn, playerId } from './utilities'
 
 export default class App extends Component {
   state = {
     loading: false,
     activeItem: 'players',
-    groups: [],
+    recurringSessions: [],
     players: [],
     loggedIn: false,
     error: '',
@@ -43,15 +44,16 @@ export default class App extends Component {
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          window.history.pushState({}, 'Home', '/')
           localStorage.setItem('token', data.jwt)
           localStorage.setItem('admin', data.player.admin)
+          localStorage.setItem('player_id', data.player.id)
 
           this.setState({
             error: '',
             loggedIn: true,
             user: data.player,
           })
+          navigate('/')
         } else {
           this.setState({ error: 'Invalid username or password' })
           alert('Invalid username or password')
@@ -64,19 +66,19 @@ export default class App extends Component {
     this.setState({ loggedIn: false })
   }
 
-  fetchGroups = () => {
-    this.setState({ loading: true, groups: [] })
+  fetchRecurringSessions = () => {
+    this.setState({ loading: true, recurringSessions: [] })
 
     // let token = localStorage.getItem('token')
     // if (token) {
-    fetch(baseUrl + '/groups', {
+    fetch(baseUrl + '/recurring_sessions', {
       // headers: HEADERS,
     })
       .then((res) => res.json())
-      .then((groups) => {
-        console.log('App -> groups', groups)
+      .then((recurringSessions) => {
+        console.log('App -> RecurringSessions', recurringSessions)
 
-        this.setState({ groups, loading: false })
+        this.setState({ recurringSessions, loading: false })
       })
       .catch((e) => console.error(e))
     // }
@@ -92,7 +94,6 @@ export default class App extends Component {
     })
       .then((res) => res.json())
       .then((players) => {
-        console.log('App -> players', players)
         const sortedPlayers = players.sort((a, b) => {
           if (a.ratings.length > 0 && b.ratings.length > 0) {
             const sortedARatings = a.ratings.sort((a, b) => a.id - b.id)
@@ -116,41 +117,20 @@ export default class App extends Component {
     // }
   }
 
-  handleAddPlayerToGroup = (groupId, playerId, addOrRemove) => {
-    this.setState({ loading: true })
-
-    let data = {
-      player_id: playerId,
-      add_or_remove: addOrRemove,
-    }
-
-    fetch(`${baseUrl}/groups/${groupId}`, {
-      method: 'PATCH',
-      headers: HEADERS,
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((jsonData) => {
-        this.fetchPlayers()
-        this.fetchGroups()
-        this.setState({
-          loading: false,
-        })
-      })
-  }
-
   handleCreatePlayer = () => {}
 
   handleNavClick = (item) => {
-    this.setState({ navigated: true, activeItem: item })
+    this.setState({ activeItem: item })
+  }
+
+  handleLoginClick = () => {
+    this.handleNavClick('')
   }
 
   setActiveItem = () => {
     const path = window.location.pathname
     let activeItem
-    if (path.indexOf('groups') > -1) {
-      activeItem = 'groups'
-    } else if (path.indexOf('sessions') > -1) {
+    if (path.indexOf('sessions') > -1) {
       activeItem = 'sessions'
     } else if (path.indexOf('record-results') > -1) {
       activeItem = 'record-results'
@@ -160,14 +140,35 @@ export default class App extends Component {
     this.setState({ activeItem })
   }
 
+  fetchUser = () => {
+    if (isLoggedIn()) {
+      let token = localStorage.getItem('token')
+      if (token) {
+        fetch(baseUrl + `/players/${playerId()}`, {
+          headers: HEADERS,
+        })
+          .then((res) => res.json())
+          .then((player) => {
+            this.setState({
+              error: '',
+              loggedIn: true,
+              user: player,
+            })
+          })
+          .catch((e) => console.error(e))
+      }
+    }
+  }
   componentDidMount() {
     this.setActiveItem()
-    this.fetchGroups()
+    this.fetchRecurringSessions()
     this.fetchPlayers()
+    this.fetchUser()
   }
 
   render() {
     const { user, groups, players, loading, activeItem } = this.state
+
     return (
       <Container style={{ padding: '1rem' }}>
         <div>
@@ -180,7 +181,7 @@ export default class App extends Component {
                 <Button floated="right">Log Out</Button>
               </Link>
             ) : (
-              <Link to="/login">
+              <Link to="/login" onClick={() => this.handleLoginClick()}>
                 <Button floated="right">Log In</Button>
               </Link>
             )}
@@ -200,24 +201,18 @@ export default class App extends Component {
                 user={user}
                 groups={groups}
                 players={players}
-                handleAddPlayerToGroup={this.handleAddPlayerToGroup}
                 handleCreatePlayer={this.handleCreatePlayer}
-              />
-              <GroupContainer
-                path="groups"
-                loading={loading}
-                user={user}
-                groups={groups}
-                players={players}
-                handleAddPlayerToGroup={this.handleAddPlayerToGroup}
               />
               <SessionContainer path="/sessions" user={user} />
               {localStorage.getItem('token') ? (
                 <CalculateRatings path="/record-results" user={user} />
               ) : null}
+              {localStorage.getItem('token') ? (
+                <MyProfileContainer path="/my-profile" user={user} />
+              ) : null}
             </Fragment>
 
-            {!localStorage.getItem('token') ? (
+            {!isLoggedIn() ? (
               <LoginForm path="login" handleLogin={this.handleLogin} />
             ) : null}
           </Segment>

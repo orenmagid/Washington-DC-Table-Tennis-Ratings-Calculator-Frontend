@@ -78,14 +78,7 @@ export default class PlayerContainer extends Component {
 
   render() {
     const { column, direction, sortedPlayers } = this.state
-    const {
-      user,
-      groups,
-      players,
-      handleAddPlayerToGroup,
-      loading,
-      handleCreatePlayer,
-    } = this.props
+    const { user, groups, players, loading, handleCreatePlayer } = this.props
 
     return (
       <Fragment>
@@ -112,7 +105,6 @@ export default class PlayerContainer extends Component {
               column={column}
               direction={direction}
               handleHeaderClick={this.handleHeaderClick}
-              handleAddPlayerToGroup={handleAddPlayerToGroup}
               handleShowPlayer={this.handleShowPlayer}
             />
           </Fragment>

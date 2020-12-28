@@ -41,3 +41,11 @@ export const datesAreOnSameDay = (first, second) => {
 export const isAdmin = () => {
   return localStorage.getItem('admin') === 'true'
 }
+
+export const isLoggedIn = () => {
+  return !!localStorage.getItem('token')
+}
+
+export const playerId = () => {
+  return localStorage.getItem('player_id')
+}
