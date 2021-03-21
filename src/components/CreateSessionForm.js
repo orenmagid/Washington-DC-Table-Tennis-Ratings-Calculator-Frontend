@@ -44,7 +44,6 @@ export default class CreateSessionForm extends Component {
     this.setState({ loading: true })
     const { date } = this.state
     const uniqueMatches = matches.filter((match) => match.count && match.played)
-    console.log('handleCreateSessionClick -> uniqueMatches', uniqueMatches)
 
     let data = {
       matches: uniqueMatches,

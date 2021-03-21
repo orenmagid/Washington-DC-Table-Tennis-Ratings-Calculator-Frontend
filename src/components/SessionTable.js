@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from 'react'
-import { Table, Message } from 'semantic-ui-react'
+import React, { Component } from 'react'
+import { Table, Header, Segment } from 'semantic-ui-react'
 
 export default class SessionTable extends Component {
   state = {}
@@ -9,12 +9,13 @@ export default class SessionTable extends Component {
   render() {
     const { sessions, handleSessionClick, activeItem } = this.props
     return (
-      <Fragment>
-        <Message
-          attached
-          header="Past Sessions"
-          content="Click on a session to see a list of results from that session."
-        />
+      <Segment>
+        <Header as="h3">
+          Past Sessions
+          <Header.Subheader>
+            Click on a session to see a list of results from that session.
+          </Header.Subheader>
+        </Header>
         <Table singleLine selectable>
           <Table.Header>
             <Table.Row>
@@ -38,7 +39,7 @@ export default class SessionTable extends Component {
             })}
           </Table.Body>
         </Table>
-      </Fragment>
+      </Segment>
     )
   }
 }

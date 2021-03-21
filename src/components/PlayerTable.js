@@ -91,6 +91,8 @@ export default class PlayerTable extends Component {
                     </Table.Cell>
                   </Table.Row>
                 )
+              } else {
+                return null
               }
             })}
           </Table.Body>

@@ -1,3 +1,66 @@
+export const arraysEqual = (a, b) => {
+  if (a === b) return true
+  if (a == null || b == null) return false
+  if (a.length !== b.length) return false
+
+  a.sort()
+  b.sort()
+
+  for (var i = 0; i < a.length; ++i) {
+    if (a[i] !== b[i]) return false
+  }
+  return true
+}
+
+export const getRatingLimit = (recurringSession) => {
+  const ratingLimit = !recurringSession.low_rating_limit
+    ? `Below ${recurringSession.high_rating_limit}`
+    : !recurringSession.high_rating_limit
+    ? `Above ${recurringSession.low_rating_limit}`
+    : `${recurringSession.low_rating_limit} through ${recurringSession.high_rating_limit}`
+  return ratingLimit
+}
+
+export const sortSessions = (recurringSessions) => {
+  const sortedRecurringSesssions = recurringSessions.sort((a, b) => {
+    return getDefaultDate(a, false, false) - getDefaultDate(b, false, false)
+  })
+  return sortedRecurringSesssions
+}
+
+export const getDefaultDate = (
+  recurringSession,
+  past = true,
+  formatted = true
+) => {
+  const todayDayOfWeek = new Date().getDay()
+
+  let recurringSessionDayOfWeek = recurringSession.day_of_week
+
+  let defaultDate
+  if (past) {
+    recurringSessionDayOfWeek =
+      recurringSessionDayOfWeek > todayDayOfWeek
+        ? recurringSessionDayOfWeek - 7
+        : recurringSessionDayOfWeek
+
+    defaultDate =
+      Date.now() -
+      (todayDayOfWeek - recurringSessionDayOfWeek) * (3600 * 1000 * 24)
+  } else {
+    recurringSessionDayOfWeek += 7
+
+    defaultDate =
+      Date.now() +
+      (todayDayOfWeek + recurringSessionDayOfWeek) * (3600 * 1000 * 24)
+  }
+
+  const returnValue = formatted
+    ? getFormattedDate(new Date(defaultDate))
+    : new Date(defaultDate)
+  return returnValue
+}
+
 export const sortPlayerRatings = (player) => {
   return player.ratings.sort((a, b) => {
     if (!a.session) {
@@ -13,9 +76,13 @@ export const sortPlayerRatings = (player) => {
   })
 }
 
-export const mostRecentPlayerRating = (player) => {
+export const mostRecentPlayerRating = (player, fixReversedIndexing = false) => {
   const sortedRatings = sortPlayerRatings(player)
-  return sortedRatings[sortedRatings.length - 1]
+
+  const finalIndex = fixReversedIndexing ? 0 : sortedRatings.length - 1
+  const mostRecentRating = sortedRatings[finalIndex]
+
+  return mostRecentRating
 }
 
 export const getFormattedDate = (date) => {

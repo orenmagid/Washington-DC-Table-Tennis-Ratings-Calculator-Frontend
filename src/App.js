@@ -15,6 +15,7 @@ export default class App extends Component {
     loading: false,
     activeItem: 'players',
     recurringSessions: [],
+    signupForms: [],
     players: [],
     loggedIn: false,
     error: '',
@@ -117,6 +118,26 @@ export default class App extends Component {
     // }
   }
 
+  fetchSignupForms = () => {
+    let token = localStorage.getItem('token')
+    if (token) {
+      this.setState({ loading: true, signupForms: [] })
+
+      fetch(`${baseUrl}/signup_forms`, {
+        method: 'Get',
+        headers: HEADERS,
+      })
+        .then((response) => response.json())
+        .then((signupForms) => {
+          this.setState({
+            signupForms,
+            loading: false,
+          })
+        })
+        .catch((e) => console.error(e))
+    }
+  }
+
   handleCreatePlayer = () => {}
 
   handleNavClick = (item) => {
@@ -164,10 +185,19 @@ export default class App extends Component {
     this.fetchRecurringSessions()
     this.fetchPlayers()
     this.fetchUser()
+    this.fetchSignupForms()
   }
 
   render() {
-    const { user, groups, players, loading, activeItem } = this.state
+    const {
+      user,
+      groups,
+      players,
+      loading,
+      activeItem,
+      recurringSessions,
+      signupForms,
+    } = this.state
 
     return (
       <Container style={{ padding: '1rem' }}>
@@ -203,7 +233,13 @@ export default class App extends Component {
                 players={players}
                 handleCreatePlayer={this.handleCreatePlayer}
               />
-              <SessionContainer path="/sessions" user={user} />
+              <SessionContainer
+                path="/sessions"
+                user={user}
+                recurringSessions={recurringSessions}
+                signupForms={signupForms}
+                fetchSignupForms={this.fetchSignupForms}
+              />
               {localStorage.getItem('token') ? (
                 <CalculateRatings path="/record-results" user={user} />
               ) : null}
