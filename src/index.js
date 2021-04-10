@@ -12,9 +12,9 @@ ReactDOM.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <App />
-      {!process.env.NODE_ENV || process.env.NODE_ENV === "development" ? (
+      {/* {!process.env.NODE_ENV || process.env.NODE_ENV === "development" ? (
         <ReactQueryDevtools initialIsOpen={false} />
-      ) : null}
+      ) : null} */}
     </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById("root")
