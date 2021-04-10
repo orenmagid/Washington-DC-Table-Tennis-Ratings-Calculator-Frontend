@@ -8,7 +8,6 @@ export default function ScoreCardTable({
   matches,
   handleClick,
 }) {
-  console.log("matches", matches)
   return (
     <Table unstackable celled fixed size="large">
       <Table.Header>

@@ -2,10 +2,6 @@ import React from "react"
 import { Table } from "semantic-ui-react"
 
 export default function ResultsTable({ matches }) {
-  console.log(
-    "🚀 ~ file: ResultsTable.js ~ line 5 ~ ResultsTable ~ matches",
-    matches
-  )
   const matchesToReport = matches.filter((match) => match.count && match.played)
   return (
     <Table celled>
