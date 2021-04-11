@@ -1,4 +1,5 @@
 import React from "react"
+import { useHistory } from "react-router-dom"
 import ErrorMessage from "./ErrorMessage"
 import { useQuery } from "react-query"
 import { fetchPlayer } from "../api"
@@ -17,6 +18,8 @@ import CloseButton from "./elements/CloseButton"
 import { sortRatings, getFormattedDate } from "../utilities"
 
 export default function PlayerStats({ match }) {
+  let history = useHistory()
+
   const { data: player, error, isLoading, isError } = useQuery(
     ["player", match.params.playerId],
     () => fetchPlayer(match.params.playerId)
@@ -82,7 +85,7 @@ export default function PlayerStats({ match }) {
 
   return (
     <Segment>
-      <CloseButton handleClick={() => window.history.back()} />
+      <CloseButton handleClick={() => history.push("/players")} />
       <div style={{ textAlign: "center" }}>
         <Header as="h2">{player.name}</Header>
 

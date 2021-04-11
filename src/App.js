@@ -15,7 +15,7 @@ import LoginForm from "./components/LoginForm"
 import CalculateRatingsContainer from "./pages/CalculateRatings"
 
 export default function App() {
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState(null)
 
   const handleLogin = (e) => {
     e.preventDefault()
@@ -38,10 +38,10 @@ export default function App() {
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          window.history.pushState({}, "Home", "/")
           localStorage.setItem("token", data.jwt)
           localStorage.setItem("admin", data.player.admin)
-
+          localStorage.setItem("user", JSON.stringify(data.player))
+          // This is just to get the component to rerender, which triggers the redirect to /players. Obviously, not a good solution.
           setUser(data.player)
         } else {
           alert("Invalid username or password")
@@ -80,27 +80,17 @@ export default function App() {
               <Route
                 path="/players"
                 render={(props) => (
-                  <Players
-                    user={user}
-                    handleCreatePlayer={handleCreatePlayer}
-                    {...props}
-                  />
+                  <Players handleCreatePlayer={handleCreatePlayer} {...props} />
                 )}
               ></Route>
 
               <Route
                 path="/groups"
-                render={(props) => (
-                  <Groups
-                    user={user}
-                    // handleAddPlayerToGroup={handleAddPlayerToGroup}
-                    {...props}
-                  />
-                )}
+                render={(props) => <Groups {...props} />}
               ></Route>
               <Route
                 path="/results"
-                render={(props) => <Results user={user} {...props} />}
+                render={(props) => <Results {...props} />}
               ></Route>
               {localStorage.getItem("token") ? (
                 <Route

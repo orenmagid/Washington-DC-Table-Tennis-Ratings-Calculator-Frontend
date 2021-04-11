@@ -7,7 +7,7 @@ import ErrorMessage from "../../components/ErrorMessage"
 import { useQuery } from "react-query"
 import { fetchPlayers, fetchGroups } from "../../api"
 
-export default function PlayerContainer({ user, handleCreatePlayer }) {
+export default function PlayerContainer({ handleCreatePlayer }) {
   const {
     data: players,
     error: playersError,
@@ -66,7 +66,7 @@ export default function PlayerContainer({ user, handleCreatePlayer }) {
             </div>
           </Message>
 
-          <PlayerTable user={user} groups={groups} players={players} />
+          <PlayerTable groups={groups} players={players} />
         </Route>
       </>
     </>

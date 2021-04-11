@@ -76,6 +76,12 @@ export const isAdmin = () => {
   return localStorage.getItem("admin") === "true"
 }
 
+export const getUser = () => {
+  return localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user"))
+    : null
+}
+
 export const groupNameFromGroupId = (groups, groupId) => {
   const group = groups.find((g) => {
     return g.id === groupId

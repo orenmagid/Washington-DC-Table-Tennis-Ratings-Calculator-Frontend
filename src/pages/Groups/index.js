@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import { Route } from "react-router-dom"
 import GroupListTable from "./GroupListTable"
 import GroupPlayerTable from "./GroupPlayerTable"
@@ -7,7 +7,7 @@ import { Loader } from "semantic-ui-react"
 import { useQuery } from "react-query"
 import { fetchGroups } from "../../api"
 
-export default function GroupContainer({ user, history }) {
+export default function GroupContainer() {
   const { data: groups, error, isLoading, isError } = useQuery(
     "groups",
     fetchGroups
@@ -30,9 +30,7 @@ export default function GroupContainer({ user, history }) {
 
       <Route
         path={`/groups/:groupId`}
-        render={(props) => (
-          <GroupPlayerTable user={user} groups={groups} {...props} />
-        )}
+        render={(props) => <GroupPlayerTable groups={groups} {...props} />}
       ></Route>
     </>
   )
