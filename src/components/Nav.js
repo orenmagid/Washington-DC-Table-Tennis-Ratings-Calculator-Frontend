@@ -1,38 +1,26 @@
 import React from "react"
-import { Link } from "react-router-dom"
-import { Menu } from "semantic-ui-react"
+import { NavLink } from "react-router-dom"
+import { Menu, Icon } from "semantic-ui-react"
 import { isAdmin } from "../utilities"
 
-export default function Nav({ location }) {
+export default function Nav() {
   return (
     <nav>
-      <Menu tabular stackable>
-        <Link to="/players">
-          <Menu.Item
-            name="players"
-            active={location.pathname.indexOf("/players") > -1}
-          />
-        </Link>
-        <Link to="/groups">
-          <Menu.Item
-            name="groups"
-            active={location.pathname.indexOf("/groups") > -1}
-          />
-        </Link>
-        <Link to="/results">
-          <Menu.Item
-            name="results"
-            active={location.pathname.indexOf("/results") > -1}
-          />
-        </Link>
+      <Menu stackable>
+        <Menu.Item to="/players" as={NavLink}>
+          Players
+        </Menu.Item>
+        <Menu.Item to="/groups/1" as={NavLink}>
+          Groups
+        </Menu.Item>
+        <Menu.Item to="/results" as={NavLink}>
+          Results
+        </Menu.Item>
         {isAdmin() ? (
-          <Link to="/record-results">
-            <Menu.Item
-              name="record results"
-              icon="calculator"
-              active={location.pathname.indexOf("/record-results") > -1}
-            />
-          </Link>
+          <Menu.Item to="/record-results" as={NavLink}>
+            <Icon name="calculator" />
+            Record Results
+          </Menu.Item>
         ) : null}
       </Menu>
     </nav>

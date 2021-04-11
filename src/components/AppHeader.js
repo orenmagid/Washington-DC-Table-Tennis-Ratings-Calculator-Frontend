@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { Header, Segment, Button, Message } from "semantic-ui-react"
 import Nav from "./Nav"
 
-export default function AppHeader({ location, handleLogout }) {
+export default function AppHeader({ handleLogout }) {
   return (
     <header>
       <Segment clearing>
@@ -26,7 +26,7 @@ export default function AppHeader({ location, handleLogout }) {
           </Link>
         )}
       </Segment>
-      <Nav location={location} />
+      <Nav />
       <Message
         style={{ marginBottom: "1rem" }}
         content="If you see something wrong, or have questions, email Oren Magid at oren.michael.magid@gmail.com."
