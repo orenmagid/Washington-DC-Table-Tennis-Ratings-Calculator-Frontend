@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { useQuery } from "react-query"
 import { fetchGroup } from "../../api"
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { Button, Message, Segment, Icon, Form, Loader } from "semantic-ui-react"
 import ScoreCardTable from "./ScoreCardTable"
 import ResultsTable from "./ResultsTable"
@@ -11,7 +11,6 @@ import "react-datepicker/dist/react-datepicker.css"
 import "react-datepicker/dist/react-datepicker-cssmodules.css"
 
 export default function ScoreCard({
-  match,
   handleRemoveGroup,
   handleCreateSessionClick,
   group_id,
@@ -22,9 +21,11 @@ export default function ScoreCard({
   const [matches, setMatches] = useState([])
   const [inactivePlayerIds, setInactivePlayerIds] = useState([])
 
+  let { groupId } = useParams()
+
   const { data: group, error, isLoading, isError } = useQuery(
-    ["group", match.params.groupId],
-    () => fetchGroup(match.params.groupId),
+    ["group", groupId],
+    () => fetchGroup(groupId),
     {
       onSuccess: (group) => {
         setPlayers(group.players)

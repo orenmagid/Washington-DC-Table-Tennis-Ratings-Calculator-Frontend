@@ -36,10 +36,9 @@ export default function PlayerContainer({ handleCreatePlayer }) {
 
   return (
     <>
-      <Route
-        path={`/players/:playerId`}
-        render={(props) => <PlayerStats {...props} />}
-      />
+      <Route path={`/players/:playerId`}>
+        <PlayerStats />
+      </Route>
 
       <>
         {localStorage.getItem("token") === true ? (

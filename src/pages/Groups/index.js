@@ -23,15 +23,13 @@ export default function GroupContainer() {
 
   return (
     <>
-      <Route
-        path={`/groups`}
-        render={(props) => <GroupListTable groups={groups} {...props} />}
-      ></Route>
+      <Route path={`/groups`}>
+        <GroupListTable groups={groups} />
+      </Route>
 
-      <Route
-        path={`/groups/:groupId`}
-        render={(props) => <GroupPlayerTable groups={groups} {...props} />}
-      ></Route>
+      <Route path={`/groups/:groupId`}>
+        <GroupPlayerTable groups={groups} />
+      </Route>
     </>
   )
 }

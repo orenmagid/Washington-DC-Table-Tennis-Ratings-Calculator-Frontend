@@ -1,6 +1,6 @@
 import React from "react"
 import { useQuery } from "react-query"
-import { Route } from "react-router-dom"
+import { Route, useHistory } from "react-router-dom"
 import ResultsTable from "./ResultsTable"
 import MatchesTable from "./MatchesTable"
 import { Loader } from "semantic-ui-react"
@@ -12,9 +12,10 @@ export default function SessionContainer(props) {
     "sessions",
     fetchSessions
   )
+  let history = useHistory()
 
   const handleSessionClick = (e, session_id) => {
-    props.history.push(`/results/${session_id}`)
+    history.push(`/results/${session_id}`)
   }
 
   if (isLoading) {
@@ -27,21 +28,15 @@ export default function SessionContainer(props) {
 
   return (
     <>
-      <Route
-        path={`/results/:sessionId`}
-        render={(props) => <MatchesTable {...props} />}
-      ></Route>
-      <Route
-        exact
-        path={`/results`}
-        render={(props) => (
-          <ResultsTable
-            sessions={sessions}
-            handleSessionClick={handleSessionClick}
-            {...props}
-          />
-        )}
-      ></Route>
+      <Route path={`/results/:sessionId`}>
+        <MatchesTable />
+      </Route>
+      <Route exact path={`/results`}>
+        <ResultsTable
+          sessions={sessions}
+          handleSessionClick={handleSessionClick}
+        />
+      </Route>
     </>
   )
 }

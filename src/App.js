@@ -58,12 +58,9 @@ export default function App() {
   return (
     <Router>
       <Container style={{ padding: "1rem" }}>
-        <Route
-          path="/"
-          render={(props) => (
-            <AppHeader handleLogout={handleLogout} {...props} />
-          )}
-        ></Route>
+        <Route path="/">
+          <AppHeader handleLogout={handleLogout} />
+        </Route>
         <main>
           <Switch>
             <Segment>
@@ -77,31 +74,20 @@ export default function App() {
                   <Redirect to="/players" />
                 )}
               </Route>
-              <Route
-                path="/players"
-                render={(props) => (
-                  <Players handleCreatePlayer={handleCreatePlayer} {...props} />
-                )}
-              ></Route>
+              <Route path="/players">
+                <Players handleCreatePlayer={handleCreatePlayer} />
+              </Route>
 
-              <Route
-                path="/groups"
-                render={(props) => <Groups {...props} />}
-              ></Route>
-              <Route
-                path="/results"
-                render={(props) => <Results {...props} />}
-              ></Route>
+              <Route path="/groups">
+                <Groups />
+              </Route>
+              <Route path="/results">
+                <Results />
+              </Route>
               {localStorage.getItem("token") ? (
-                <Route
-                  path="/record-results"
-                  render={(props) => (
-                    <CalculateRatingsContainer
-                      path="/record-results"
-                      {...props}
-                    />
-                  )}
-                ></Route>
+                <Route path="/record-results">
+                  <CalculateRatingsContainer path="/record-results" />
+                </Route>
               ) : null}
             </Segment>
           </Switch>

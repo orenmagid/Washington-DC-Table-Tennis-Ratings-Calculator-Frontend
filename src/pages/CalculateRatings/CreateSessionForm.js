@@ -1,14 +1,16 @@
 import React, { useState } from "react"
-import { Route } from "react-router-dom"
+import { Route, useHistory } from "react-router-dom"
 import { useMutation, useQueryClient } from "react-query"
 import { Container, Form, Segment, Message, Loader } from "semantic-ui-react"
 import ErrorMessage from "../../components/ErrorMessage"
 import Scorecard from "./ScoreCard"
 import { createSession } from "../../api"
 
-export default function CreateSessionForm({ history, groups }) {
+export default function CreateSessionForm({ groups }) {
   const [date, setDate] = useState(null)
   const [group_id, set_group_id] = useState(null)
+
+  let history = useHistory()
 
   const queryClient = useQueryClient()
 
@@ -102,19 +104,15 @@ export default function CreateSessionForm({ history, groups }) {
           </Form>
 
           <>
-            <Route
-              path={`/record-results/:groupId`}
-              render={(props) => (
-                <Scorecard
-                  date={date}
-                  handleDateChange={handleDateChange}
-                  handleCreateSessionClick={handleCreateSessionClick}
-                  handleRemoveGroup={handleRemoveGroup}
-                  group_id={group_id}
-                  {...props}
-                />
-              )}
-            ></Route>
+            <Route path={`/record-results/:groupId`}>
+              <Scorecard
+                date={date}
+                handleDateChange={handleDateChange}
+                handleCreateSessionClick={handleCreateSessionClick}
+                handleRemoveGroup={handleRemoveGroup}
+                group_id={group_id}
+              />
+            </Route>
           </>
         </div>
       </Container>

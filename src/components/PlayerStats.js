@@ -1,5 +1,5 @@
 import React from "react"
-import { useHistory } from "react-router-dom"
+import { useHistory, useParams } from "react-router-dom"
 import ErrorMessage from "./ErrorMessage"
 import { useQuery } from "react-query"
 import { fetchPlayer } from "../api"
@@ -17,12 +17,13 @@ import {
 import CloseButton from "./elements/CloseButton"
 import { sortRatings, getFormattedDate } from "../utilities"
 
-export default function PlayerStats({ match }) {
+export default function PlayerStats() {
   let history = useHistory()
+  let { playerId } = useParams()
 
   const { data: player, error, isLoading, isError } = useQuery(
-    ["player", match.params.playerId],
-    () => fetchPlayer(match.params.playerId)
+    ["player", playerId],
+    () => fetchPlayer(playerId)
   )
 
   const renderTooltip = (props) => {
