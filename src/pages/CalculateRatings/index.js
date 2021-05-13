@@ -6,10 +6,12 @@ import { useQuery } from "react-query"
 import { fetchGroups } from "../../api"
 
 export default function SessionContainer(props) {
-  const { data: groups, error, isLoading, isError } = useQuery(
-    "groups",
-    fetchGroups
-  )
+  const {
+    data: groups,
+    error,
+    isLoading,
+    isError,
+  } = useQuery("groups", fetchGroups, { refetchInterval: false })
 
   if (isLoading) {
     return <Loader style={{ marginTop: "1rem" }} active inline="centered" />
