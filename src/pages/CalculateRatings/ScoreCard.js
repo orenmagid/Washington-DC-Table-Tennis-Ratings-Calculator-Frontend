@@ -23,16 +23,18 @@ export default function ScoreCard({
 
   let { groupId } = useParams()
 
-  const { data: group, error, isLoading, isError } = useQuery(
-    ["group", groupId],
-    () => fetchGroup(groupId),
-    {
-      onSuccess: (group) => {
-        setPlayers(group.players)
-        setInitialMatches(group.players)
-      },
-    }
-  )
+  const {
+    data: group,
+    error,
+    isLoading,
+    isError,
+  } = useQuery(["group", groupId], () => fetchGroup(groupId), {
+    onSuccess: (group) => {
+      setPlayers(group.players)
+      setInitialMatches(group.players)
+    },
+    refetchOnWindowFocus: false,
+  })
 
   const handleClick = (index, i) => {
     const stateMatches = [...matches]
