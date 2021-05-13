@@ -11,7 +11,7 @@ export default function SessionContainer(props) {
     error,
     isLoading,
     isError,
-  } = useQuery("groups", fetchGroups, { refetchInterval: false })
+  } = useQuery("groups", fetchGroups, { refetchOnWindowFocus: false })
 
   if (isLoading) {
     return <Loader style={{ marginTop: "1rem" }} active inline="centered" />
