@@ -8,7 +8,12 @@ import { isAdmin, groupNameFromGroupId } from "../utilities"
 export default function PlayerTable({ players, groups }) {
   const queryClient = useQueryClient()
 
-  const { mutate: groupMutate, isLoading, isError, isSuccess } = useMutation(
+  const {
+    mutate: groupMutate,
+    isLoading,
+    isError,
+    isSuccess,
+  } = useMutation(
     ({ groupId, playerId, addOrRemove }) =>
       addPlayerToGroup(groupId, playerId, addOrRemove),
     {

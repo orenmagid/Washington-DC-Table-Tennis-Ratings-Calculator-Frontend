@@ -11,6 +11,7 @@ import AppHeader from "./components/AppHeader"
 import Players from "./pages/Players"
 import Groups from "./pages/Groups"
 import Results from "./pages/Results"
+import SignUpForm from "./pages/SignUpForm"
 import LoginForm from "./components/LoginForm"
 import CalculateRatingsContainer from "./pages/CalculateRatings"
 
@@ -83,6 +84,9 @@ export default function App() {
               </Route>
               <Route path="/results">
                 <Results />
+              </Route>
+              <Route path="/sign-up-form">
+                <SignUpForm />
               </Route>
               {localStorage.getItem("token") ? (
                 <Route path="/record-results">
