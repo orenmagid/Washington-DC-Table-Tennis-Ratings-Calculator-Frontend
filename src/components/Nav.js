@@ -16,9 +16,6 @@ export default function Nav() {
         <Menu.Item to="/results" as={NavLink}>
           Results
         </Menu.Item>
-        <Menu.Item to="/sign-up-form" as={NavLink}>
-          Sign Up Form
-        </Menu.Item>
         {isAdmin() ? (
           <Menu.Item to="/record-results" as={NavLink}>
             <Icon name="calculator" />

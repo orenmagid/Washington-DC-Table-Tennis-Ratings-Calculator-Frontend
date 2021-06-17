@@ -73,47 +73,47 @@ class SignUpForm extends React.Component {
               }
             })}
             <Table.Row>
-              <Table.Cell></Table.Cell>
-              <Table.Cell></Table.Cell>
-              <Table.Cell></Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell></Table.Cell>
+              <Table.Cell> </Table.Cell>
               <Table.Cell></Table.Cell>
               <Table.Cell></Table.Cell>
             </Table.Row>
             <Table.Row>
-              <Table.Cell></Table.Cell>
-              <Table.Cell></Table.Cell>
-              <Table.Cell></Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell></Table.Cell>
+              <Table.Cell> </Table.Cell>
               <Table.Cell></Table.Cell>
               <Table.Cell></Table.Cell>
             </Table.Row>
             <Table.Row>
-              <Table.Cell></Table.Cell>
-              <Table.Cell></Table.Cell>
-              <Table.Cell></Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell></Table.Cell>
+              <Table.Cell> </Table.Cell>
               <Table.Cell></Table.Cell>
               <Table.Cell></Table.Cell>
             </Table.Row>
             <Table.Row>
-              <Table.Cell></Table.Cell>
-              <Table.Cell></Table.Cell>
-              <Table.Cell></Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell></Table.Cell>
+              <Table.Cell> </Table.Cell>
               <Table.Cell></Table.Cell>
               <Table.Cell></Table.Cell>
             </Table.Row>
             <Table.Row>
+              <Table.Cell> </Table.Cell>
               <Table.Cell></Table.Cell>
+              <Table.Cell></Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell> </Table.Cell>
+              <Table.Cell></Table.Cell>
+              <Table.Cell></Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell> </Table.Cell>
+              <Table.Cell></Table.Cell>
+              <Table.Cell></Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell> </Table.Cell>
+              <Table.Cell></Table.Cell>
+              <Table.Cell></Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell> </Table.Cell>
               <Table.Cell></Table.Cell>
               <Table.Cell></Table.Cell>
             </Table.Row>
