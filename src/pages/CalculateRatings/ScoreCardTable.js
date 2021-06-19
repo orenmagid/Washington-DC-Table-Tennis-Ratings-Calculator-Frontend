@@ -1,13 +1,12 @@
 import React from "react"
-import { Table, Icon } from "semantic-ui-react"
+import { Table } from "semantic-ui-react"
 import ChoiceOfWinner from "./ChoiceOfWinner"
 
-export default function ScoreCardTable({
-  players,
-  handleInactivate,
-  matches,
-  handleClick,
-}) {
+export default function ScoreCardTable({ players, matches, handleClick }) {
+  console.log(
+    "🚀 ~ file: ScoreCardTable.js ~ line 6 ~ ScoreCardTable ~ matches",
+    matches
+  )
   return (
     <Table unstackable celled fixed size="large">
       <Table.Header>
@@ -30,12 +29,6 @@ export default function ScoreCardTable({
                   borderBottom: "1px solid rgba(34, 36, 38, 0.15)",
                 }}
               >
-                <Icon
-                  name="close"
-                  size="small"
-                  style={{ position: "absolute", top: ".25rem", right: 0 }}
-                  onClick={() => handleInactivate(player)}
-                />
                 {player.name}
               </Table.Cell>
             )
@@ -69,7 +62,6 @@ export default function ScoreCardTable({
                       <ChoiceOfWinner
                         index={index}
                         i={i}
-                        matchIndex={players.length * index + i - index}
                         match={matches[players.length * index + i - index]}
                         handleClick={handleClick}
                       />
@@ -77,7 +69,6 @@ export default function ScoreCardTable({
                       <ChoiceOfWinner
                         index={index}
                         i={i}
-                        matchIndex={players.length * index + i - index - 1}
                         match={matches[players.length * index + i - index - 1]}
                         handleClick={handleClick}
                       />

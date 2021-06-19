@@ -1,6 +1,5 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { useQuery } from "react-query"
-import { fetchGroup } from "../../api"
 import { Link, useParams } from "react-router-dom"
 import { Button, Message, Segment, Icon, Form, Loader } from "semantic-ui-react"
 import ScoreCardTable from "./ScoreCardTable"
@@ -11,30 +10,16 @@ import "react-datepicker/dist/react-datepicker.css"
 import "react-datepicker/dist/react-datepicker-cssmodules.css"
 
 export default function ScoreCard({
-  handleRemoveGroup,
+  players,
   handleCreateSessionClick,
-  group_id,
   handleDateChange,
   date,
 }) {
-  const [players, setPlayers] = useState([])
   const [matches, setMatches] = useState([])
-  const [inactivePlayerIds, setInactivePlayerIds] = useState([])
 
-  let { groupId } = useParams()
-
-  const {
-    data: group,
-    error,
-    isLoading,
-    isError,
-  } = useQuery(["group", groupId], () => fetchGroup(groupId), {
-    onSuccess: (group) => {
-      setPlayers(group.players)
-      setInitialMatches(group.players)
-    },
-    refetchOnWindowFocus: false,
-  })
+  useEffect(() => {
+    setInitialMatches(players)
+  }, [players])
 
   const handleClick = (index, i) => {
     const stateMatches = [...matches]
@@ -87,30 +72,6 @@ export default function ScoreCard({
     setMatches(stateMatches)
   }
 
-  const handleInactivate = (player) => {
-    let filteredInactivePlayerIds = [...inactivePlayerIds]
-    if (filteredInactivePlayerIds.indexOf(player.id) > -1) {
-      filteredInactivePlayerIds = filteredInactivePlayerIds.filter((pid) => {
-        return pid !== player.id
-      })
-    } else {
-      filteredInactivePlayerIds.push(player.id)
-    }
-
-    const mappedMatches = matches.map((match) => {
-      if (
-        filteredInactivePlayerIds.indexOf(match.winner.id) > -1 ||
-        filteredInactivePlayerIds.indexOf(match.loser.id) > -1
-      ) {
-        return { ...match, played: false, hide: true }
-      } else {
-        return { ...match, played: true, hide: false }
-      }
-    })
-    setInactivePlayerIds(filteredInactivePlayerIds)
-    setMatches(mappedMatches)
-  }
-
   const setInitialMatches = (players) => {
     const matches = []
 
@@ -140,23 +101,23 @@ export default function ScoreCard({
     setMatches(matches)
   }
 
-  if (isLoading) {
-    return <Loader style={{ marginTop: "1rem" }} active inline="centered" />
-  }
+  // if (isLoading) {
+  //   return <Loader style={{ marginTop: "1rem" }} active inline="centered" />
+  // }
 
-  if (isError) {
-    return <ErrorMessage message={error} />
-  }
+  // if (isError) {
+  //   return <ErrorMessage message={error} />
+  // }
 
   return (
     <Segment>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <Link to="/record-results" onClick={handleRemoveGroup}>
+        {/* <Link to="/record-results" onClick={() => {}}>
           <Button icon labelPosition="left">
             <Icon name="close" />
             Cancel Session
           </Button>
-        </Link>
+        </Link> */}
         <Form>
           <Form.Field>
             <DatePicker
@@ -171,7 +132,7 @@ export default function ScoreCard({
         <Button
           icon
           labelPosition="right"
-          onClick={() => handleCreateSessionClick(matches, group_id)}
+          onClick={() => handleCreateSessionClick(matches)}
         >
           Submit Session and Calculate Ratings
           <Icon name="calculator" />
@@ -185,7 +146,6 @@ export default function ScoreCard({
 
       <ScoreCardTable
         players={players}
-        handleInactivate={handleInactivate}
         handleClick={handleClick}
         matches={matches}
       />
