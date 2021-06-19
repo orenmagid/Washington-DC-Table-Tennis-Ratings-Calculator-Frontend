@@ -10,9 +10,6 @@ export default function Nav() {
         <Menu.Item to="/players" as={NavLink}>
           Players
         </Menu.Item>
-        <Menu.Item to="/groups/1" as={NavLink}>
-          Groups
-        </Menu.Item>
         <Menu.Item to="/results" as={NavLink}>
           Results
         </Menu.Item>

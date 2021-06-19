@@ -5,7 +5,7 @@ import PlayerTable from "../../components/PlayerTable"
 import PlayerStats from "../../components/PlayerStats"
 import ErrorMessage from "../../components/ErrorMessage"
 import { useQuery } from "react-query"
-import { fetchPlayers, fetchGroups } from "../../api"
+import { fetchPlayers } from "../../api"
 
 export default function PlayerContainer({ handleCreatePlayer }) {
   const {
@@ -15,16 +15,9 @@ export default function PlayerContainer({ handleCreatePlayer }) {
     isError: isPlayersError,
   } = useQuery("players", fetchPlayers)
 
-  const {
-    data: groups,
-    error: groupsError,
-    isLoading: isLoadingGroups,
-    isError: isGroupsError,
-  } = useQuery("groups", fetchGroups)
-
-  const isLoading = isLoadingPlayers || isLoadingGroups
-  const isError = isPlayersError || isGroupsError
-  const error = playersError ? playersError : groupsError
+  const isLoading = isLoadingPlayers
+  const isError = isPlayersError
+  const error = playersError
 
   if (isLoading) {
     return <Loader style={{ marginTop: "1rem" }} active inline="centered" />
@@ -65,7 +58,7 @@ export default function PlayerContainer({ handleCreatePlayer }) {
             </div>
           </Message>
 
-          <PlayerTable groups={groups} players={players} />
+          <PlayerTable players={players} />
         </Route>
       </>
     </>

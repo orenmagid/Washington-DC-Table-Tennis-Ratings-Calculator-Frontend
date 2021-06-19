@@ -9,7 +9,6 @@ import { baseUrl } from "./constants"
 import { Container, Segment } from "semantic-ui-react"
 import AppHeader from "./components/AppHeader"
 import Players from "./pages/Players"
-import Groups from "./pages/Groups"
 import Results from "./pages/Results"
 import SignUpForm from "./pages/SignUpForm"
 import LoginForm from "./components/LoginForm"
@@ -77,10 +76,6 @@ export default function App() {
               </Route>
               <Route path="/players">
                 <Players handleCreatePlayer={handleCreatePlayer} />
-              </Route>
-
-              <Route path="/groups">
-                <Groups />
               </Route>
               <Route path="/results">
                 <Results />

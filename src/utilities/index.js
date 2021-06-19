@@ -18,29 +18,21 @@ export const mostRecentPlayerRating = (player) => {
   return sortedRatings[sortedRatings.length - 1]
 }
 
-const days = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-]
+const days = ["Sun", "Mon", "Tue", "Wed", "Thurs", "Fri", "Sat"]
 
 const months = [
-  "January",
-  "February",
+  "Jan",
+  "Feb",
   "March",
   "April",
   "May",
   "June",
   "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
+  "Aug",
+  "Sept",
+  "Oct",
+  "Nov",
+  "Dec",
 ]
 
 export const getFormattedDate = (date, fullFormat = false) => {
@@ -80,11 +72,4 @@ export const getUser = () => {
   return localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user"))
     : null
-}
-
-export const groupNameFromGroupId = (groups, groupId) => {
-  const group = groups.find((g) => {
-    return g.id === groupId
-  })
-  return group.name
 }
