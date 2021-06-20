@@ -3,9 +3,10 @@ import { Table } from "semantic-ui-react"
 import ChoiceOfWinner from "./ChoiceOfWinner"
 
 export default function ScoreCardTable({ players, matches, handleClick }) {
+  const matchesToReport = matches.filter((match) => match.count && match.played)
   console.log(
-    "🚀 ~ file: ScoreCardTable.js ~ line 6 ~ ScoreCardTable ~ matches",
-    matches
+    "🚀 ~ file: ScoreCardTable.js ~ line 7 ~ ScoreCardTable ~ matchesToReport",
+    matchesToReport
   )
   return (
     <Table unstackable celled fixed size="large">
@@ -29,7 +30,13 @@ export default function ScoreCardTable({ players, matches, handleClick }) {
                   borderBottom: "1px solid rgba(34, 36, 38, 0.15)",
                 }}
               >
-                {player.name}
+                {player.name} (
+                {
+                  matchesToReport.filter(
+                    (match) => match.winner.id === player.id
+                  ).length
+                }{" "}
+                wins)
               </Table.Cell>
             )
           })}

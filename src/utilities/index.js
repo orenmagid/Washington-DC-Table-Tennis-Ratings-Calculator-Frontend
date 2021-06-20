@@ -6,7 +6,7 @@ export const sortRatings = (ratings) => {
     if (!b.session) {
       return 1
     }
-    if (datesAreOnSameDay(new Date(b.session_id), new Date(a.session_id))) {
+    if (datesAreOnSameDay(new Date(b.session.date), new Date(a.session.date))) {
       return a.session_id - b.session_id
     }
     return new Date(a.session.date) - new Date(b.session.date)

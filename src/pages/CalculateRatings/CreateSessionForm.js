@@ -30,12 +30,18 @@ export default function CreateSessionForm({ players }) {
     setDate(date)
   }
 
-  const handleCreateSessionClick = (matches) => {
+  const handleCreateSessionClick = (
+    matches,
+    winnerOfSessionId,
+    loserOfSessionId
+  ) => {
     const uniqueMatches = matches.filter((match) => match.count && match.played)
 
     let data = {
       matches: uniqueMatches,
       date: new Date(date),
+      winner_id: winnerOfSessionId,
+      loser_id: loserOfSessionId,
     }
 
     createSessionMutate(data)

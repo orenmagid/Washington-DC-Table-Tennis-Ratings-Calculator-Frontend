@@ -1,20 +1,33 @@
 import React from "react"
-import { useParams, useHistory } from "react-router-dom"
+import { useParams, useHistory, Link } from "react-router-dom"
 import { useQuery } from "react-query"
-import { Table, Loader, Message } from "semantic-ui-react"
+import { Table, Loader, Message, Header } from "semantic-ui-react"
 import CloseButton from "../../components/elements/CloseButton"
 import ErrorMessage from "../../components/ErrorMessage"
-import { fetchSession } from "../../api"
+import { fetchSession, fetchPlayers } from "../../api"
 import { getFormattedDate } from "../../utilities"
 
 export default function MatchesTable() {
   let { sessionId } = useParams()
   let history = useHistory()
 
-  const { data: session, error, isLoading, isError } = useQuery(
-    ["session", sessionId],
-    () => fetchSession(sessionId)
-  )
+  const {
+    data: session,
+    error: sessionError,
+    isLoading: isLoadingSession,
+    isError: isSessionError,
+  } = useQuery(["session", sessionId], () => fetchSession(sessionId))
+
+  const {
+    data: players,
+    error: playersError,
+    isLoading: isLoadingPlayers,
+    isError: isPlayersError,
+  } = useQuery("players", fetchPlayers)
+
+  const isLoading = isLoadingSession || isLoadingPlayers
+  const isError = isSessionError || isSessionError
+  const error = sessionError || playersError
 
   if (isLoading) {
     return <Loader style={{ marginTop: "1rem" }} active inline="centered" />
@@ -31,11 +44,38 @@ export default function MatchesTable() {
         attached
         header={`Results for ${getFormattedDate(session.date, true)}`}
       />
+      {session.winner_id || session.loser_id ? (
+        <Table celled>
+          <Table.Cell>
+            {session.winner_id ? (
+              <Header as="h4">
+                Group Winner:{" "}
+                {players.find((p) => p.id === session.winner_id).name} (
+                <span style={{ color: "#008F47" }}>+40</span>)
+              </Header>
+            ) : (
+              "No one wins 40 bonus points in the top group"
+            )}
+          </Table.Cell>
+          <Table.Cell>
+            {session.loser_id ? (
+              <Header as="h4">
+                Group Loser:{" "}
+                {players.find((p) => p.id === session.loser_id).name} (
+                <span style={{ color: "#F71735" }}>-40</span>)
+              </Header>
+            ) : (
+              "No one loses 40 points in the bottom group"
+            )}
+          </Table.Cell>
+        </Table>
+      ) : null}
+
       <Table celled>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell>Winner</Table.HeaderCell>
-            <Table.HeaderCell>Loser</Table.HeaderCell>
+            <Table.HeaderCell>Match Winner</Table.HeaderCell>
+            <Table.HeaderCell>Match Loser</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
 
@@ -71,12 +111,14 @@ export default function MatchesTable() {
             return (
               <Table.Row key={match.id}>
                 <Table.Cell>
-                  {winner.name} {match.rating_change !== null ? "(" : ""}
+                  <Link to={`/players/${winner.id}`}>{winner.name}</Link>{" "}
+                  {match.rating_change !== null ? "(" : ""}
                   <span style={{ color: winner_color }}>{winner_change}</span>
                   {match.rating_change !== null ? ")" : ""}
                 </Table.Cell>
                 <Table.Cell>
-                  {loser.name} {match.rating_change !== null ? "(" : ""}
+                  <Link to={`/players/${loser.id}`}>{loser.name}</Link>{" "}
+                  {match.rating_change !== null ? "(" : ""}
                   <span style={{ color: loser_color }}>{loser_change}</span>
                   {match.rating_change !== null ? ")" : ""}
                 </Table.Cell>

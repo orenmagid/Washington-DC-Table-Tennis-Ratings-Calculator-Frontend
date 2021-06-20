@@ -46,12 +46,15 @@ export default function SessionContainer(props) {
 
   return (
     <>
-      <Select
-        isMulti
-        defaultValue={sessionPlayers}
-        onChange={handleChange}
-        options={playerOptions}
-      />
+      <div style={{ marginBottom: ".75rem" }}>
+        <Select
+          placeholder="Select Players"
+          isMulti
+          defaultValue={sessionPlayers}
+          onChange={handleChange}
+          options={playerOptions}
+        />
+      </div>
       <CreateSessionForm players={sessionPlayers} {...props} />
     </>
   )

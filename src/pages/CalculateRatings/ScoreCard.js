@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react"
-import { useQuery } from "react-query"
-import { Link, useParams } from "react-router-dom"
-import { Button, Message, Segment, Icon, Form, Loader } from "semantic-ui-react"
+import Select from "react-select"
+import { Button, Message, Segment, Icon, Form } from "semantic-ui-react"
 import ScoreCardTable from "./ScoreCardTable"
 import ResultsTable from "./ResultsTable"
-import ErrorMessage from "../../components/ErrorMessage"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import "react-datepicker/dist/react-datepicker-cssmodules.css"
@@ -16,6 +14,8 @@ export default function ScoreCard({
   date,
 }) {
   const [matches, setMatches] = useState([])
+  const [winnerOfSessionId, setWinnerOfSessionId] = useState(null)
+  const [loserOfSessionId, setLoserOfSessionId] = useState(null)
 
   useEffect(() => {
     setInitialMatches(players)
@@ -101,23 +101,24 @@ export default function ScoreCard({
     setMatches(matches)
   }
 
-  // if (isLoading) {
-  //   return <Loader style={{ marginTop: "1rem" }} active inline="centered" />
-  // }
+  const playerOptions = players
+    .filter((player) => !player.hide)
+    .map((player) => ({
+      label: `${player.name} (${player.most_recent_rating})`,
+      value: player,
+    }))
 
-  // if (isError) {
-  //   return <ErrorMessage message={error} />
-  // }
+  const handleWinnerOfSessionChange = (selectedOption) => {
+    setWinnerOfSessionId(selectedOption.value.id)
+  }
+
+  const handleLoserOfSessionChange = (selectedOption) => {
+    setLoserOfSessionId(selectedOption.value.id)
+  }
 
   return (
     <Segment>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        {/* <Link to="/record-results" onClick={() => {}}>
-          <Button icon labelPosition="left">
-            <Icon name="close" />
-            Cancel Session
-          </Button>
-        </Link> */}
         <Form>
           <Form.Field>
             <DatePicker
@@ -132,12 +133,38 @@ export default function ScoreCard({
         <Button
           icon
           labelPosition="right"
-          onClick={() => handleCreateSessionClick(matches)}
+          onClick={() =>
+            handleCreateSessionClick(
+              matches,
+              winnerOfSessionId,
+              loserOfSessionId
+            )
+          }
         >
           Submit Session and Calculate Ratings
           <Icon name="calculator" />
         </Button>
       </div>
+      {players.length > 0 ? (
+        <>
+          <div style={{ marginTop: ".75rem" }}>
+            <Select
+              placeholder="Winner of Session"
+              defaultValue={null}
+              onChange={handleWinnerOfSessionChange}
+              options={playerOptions}
+            />
+          </div>
+          <div style={{ marginTop: ".75rem" }}>
+            <Select
+              placeholder="Loser of Session"
+              defaultValue={null}
+              onChange={handleLoserOfSessionChange}
+              options={playerOptions}
+            />{" "}
+          </div>
+        </>
+      ) : null}
 
       <Message
         style={{ marginTop: "2rem" }}
