@@ -149,6 +149,7 @@ export default function ScoreCard({
         <>
           <div style={{ marginTop: ".75rem" }}>
             <Select
+              isClearable
               placeholder="Winner of Session"
               defaultValue={null}
               onChange={handleWinnerOfSessionChange}
@@ -157,6 +158,7 @@ export default function ScoreCard({
           </div>
           <div style={{ marginTop: ".75rem" }}>
             <Select
+              isClearable
               placeholder="Loser of Session"
               defaultValue={null}
               onChange={handleLoserOfSessionChange}
