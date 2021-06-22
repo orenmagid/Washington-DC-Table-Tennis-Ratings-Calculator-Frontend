@@ -80,7 +80,7 @@ export default function App() {
               <Route path="/results">
                 <Results />
               </Route>
-              <Route path="/sign-up-form">
+              <Route path={["/sign-up-form", "/signup-form"]}>
                 <SignUpForm />
               </Route>
               {localStorage.getItem("token") ? (

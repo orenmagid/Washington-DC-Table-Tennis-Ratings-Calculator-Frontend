@@ -3,7 +3,7 @@ import { Table } from "semantic-ui-react"
 
 export default function SignUpTable({ players }) {
   return (
-    <Table celled style={{ fontSize: "9px" }}>
+    <Table celled style={{ fontSize: "10px" }}>
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell>Name</Table.HeaderCell>
@@ -17,13 +17,13 @@ export default function SignUpTable({ players }) {
           if (!player.hide) {
             return (
               <Table.Row key={player.name}>
-                <Table.Cell style={{ padding: "0.15rem" }}>
+                <Table.Cell style={{ padding: "0.12rem" }}>
                   {player.name}
                 </Table.Cell>
-                <Table.Cell style={{ padding: "0.15rem" }}>
+                <Table.Cell style={{ padding: "0.12rem" }}>
                   {player.most_recent_rating}
                 </Table.Cell>
-                <Table.Cell style={{ padding: "0.15rem" }}></Table.Cell>
+                <Table.Cell style={{ padding: "0.12rem" }}></Table.Cell>
               </Table.Row>
             )
           } else {
