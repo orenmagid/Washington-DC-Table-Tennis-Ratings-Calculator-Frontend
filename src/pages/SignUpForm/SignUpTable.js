@@ -1,7 +1,7 @@
 import React from "react"
 import { Table } from "semantic-ui-react"
 
-export default function SignUpTable({ players }) {
+export default function SignUpTable({ players, final }) {
   return (
     <Table celled style={{ fontSize: "10px" }}>
       <Table.Header>
@@ -30,16 +30,43 @@ export default function SignUpTable({ players }) {
             return null
           }
         })}
-        <Table.Row>
-          <Table.Cell> </Table.Cell>
-          <Table.Cell></Table.Cell>
-          <Table.Cell></Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell> </Table.Cell>
-          <Table.Cell></Table.Cell>
-          <Table.Cell></Table.Cell>
-        </Table.Row>
+        {final ? (
+          <>
+            <Table.Row>
+              <Table.Cell> </Table.Cell>
+              <Table.Cell></Table.Cell>
+              <Table.Cell></Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell> </Table.Cell>
+              <Table.Cell></Table.Cell>
+              <Table.Cell></Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell> </Table.Cell>
+              <Table.Cell></Table.Cell>
+              <Table.Cell></Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell> </Table.Cell>
+              <Table.Cell></Table.Cell>
+              <Table.Cell></Table.Cell>
+            </Table.Row>
+          </>
+        ) : (
+          <>
+            <Table.Row>
+              <Table.Cell> </Table.Cell>
+              <Table.Cell></Table.Cell>
+              <Table.Cell></Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell> </Table.Cell>
+              <Table.Cell></Table.Cell>
+              <Table.Cell></Table.Cell>
+            </Table.Row>
+          </>
+        )}
       </Table.Body>
     </Table>
   )
