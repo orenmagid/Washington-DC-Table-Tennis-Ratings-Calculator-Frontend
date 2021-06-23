@@ -9,7 +9,7 @@ class SignUpForm extends React.Component {
     const numberPerColumn = players.length / 3
 
     return (
-      <div style={{ padding: ".25rem" }}>
+      <div style={{ padding: ".5rem 1.5rem" }}>
         <Message>
           <div className="content" style={{ fontSize: "9px" }}>
             Please put an "X" in the "Playing?" column next to your name if you
@@ -21,10 +21,12 @@ class SignUpForm extends React.Component {
         </Message>
 
         <Grid columns={3}>
-          <Grid.Column>
+          <Grid.Column style={{ paddingRight: ".25rem" }}>
             <SignUpTable players={players.slice(0, numberPerColumn + 1)} />
           </Grid.Column>
-          <Grid.Column>
+          <Grid.Column
+            style={{ paddingLeft: ".25rem", paddingRight: ".25rem" }}
+          >
             <SignUpTable
               players={players.slice(
                 numberPerColumn + 1,
@@ -32,7 +34,7 @@ class SignUpForm extends React.Component {
               )}
             />
           </Grid.Column>
-          <Grid.Column>
+          <Grid.Column style={{ paddingLeft: ".25rem" }}>
             <SignUpTable
               players={players.slice(numberPerColumn * 2 + 1)}
               final

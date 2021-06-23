@@ -17,13 +17,13 @@ export default function SignUpTable({ players }) {
           if (!player.hide) {
             return (
               <Table.Row key={player.name}>
-                <Table.Cell style={{ padding: "0.12rem" }}>
+                <Table.Cell style={{ padding: "0.12rem .5rem" }}>
                   {player.name}
                 </Table.Cell>
-                <Table.Cell style={{ padding: "0.12rem" }}>
+                <Table.Cell style={{ padding: "0.12rem .5rem" }}>
                   {player.most_recent_rating}
                 </Table.Cell>
-                <Table.Cell style={{ padding: "0.12rem" }}></Table.Cell>
+                <Table.Cell style={{ padding: "0.12rem .5rem" }}></Table.Cell>
               </Table.Row>
             )
           } else {
