@@ -12,7 +12,7 @@ export default function SessionContainer(props) {
     error,
     isLoading,
     isError,
-  } = useQuery("players", fetchPlayers, { refetchOnWindowFocus: false })
+  } = useQuery("players", fetchPlayers)
 
   const [sessionPlayers, setSessionPlayers] = useState([])
 
