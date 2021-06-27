@@ -109,11 +109,11 @@ export default function ScoreCard({
     }))
 
   const handleWinnerOfSessionChange = (selectedOption) => {
-    setWinnerOfSessionId(selectedOption.value.id)
+    setWinnerOfSessionId(selectedOption ? selectedOption.value.id : null)
   }
 
   const handleLoserOfSessionChange = (selectedOption) => {
-    setLoserOfSessionId(selectedOption.value.id)
+    setLoserOfSessionId(selectedOption ? selectedOption.value.id : null)
   }
 
   return (
@@ -163,7 +163,7 @@ export default function ScoreCard({
               defaultValue={null}
               onChange={handleLoserOfSessionChange}
               options={playerOptions}
-            />{" "}
+            />
           </div>
         </>
       ) : null}
