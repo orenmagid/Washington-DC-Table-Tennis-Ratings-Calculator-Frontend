@@ -4,10 +4,6 @@ import ChoiceOfWinner from "./ChoiceOfWinner"
 
 export default function ScoreCardTable({ players, matches, handleClick }) {
   const matchesToReport = matches.filter((match) => match.count && match.played)
-  console.log(
-    "🚀 ~ file: ScoreCardTable.js ~ line 7 ~ ScoreCardTable ~ matchesToReport",
-    matchesToReport
-  )
   return (
     <Table unstackable celled fixed size="large">
       <Table.Header>

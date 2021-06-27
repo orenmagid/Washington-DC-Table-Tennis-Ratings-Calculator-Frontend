@@ -1,4 +1,4 @@
-import { baseUrl, HEADERS } from "../constants"
+import { baseUrl, headers } from "../constants"
 
 export const fetchPlayers = async () => {
   const response = await fetch(baseUrl + "/players")
@@ -85,7 +85,7 @@ export const addPlayerToGroup = async (groupId, playerId, addOrRemove) => {
 
   const response = await fetch(`${baseUrl}/groups/${groupId}`, {
     method: "PATCH",
-    headers: HEADERS,
+    headers: headers(),
     body: JSON.stringify(data),
   })
 
@@ -97,7 +97,7 @@ export const addPlayerToGroup = async (groupId, playerId, addOrRemove) => {
 export const createSession = async (data) => {
   const response = await fetch(`${baseUrl}/sessions`, {
     method: "POST",
-    headers: HEADERS,
+    headers: headers(),
     body: JSON.stringify(data),
   })
 
