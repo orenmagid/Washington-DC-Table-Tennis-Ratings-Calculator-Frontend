@@ -5,6 +5,7 @@ import { Container, Form, Segment, Message, Loader } from "semantic-ui-react"
 import ErrorMessage from "../../components/ErrorMessage"
 import Scorecard from "./ScoreCard"
 import { createSession } from "../../api"
+import { getFormattedDate } from "../../utilities"
 
 export default function CreateSessionForm({ players }) {
   const [date, setDate] = useState(null)
@@ -22,7 +23,7 @@ export default function CreateSessionForm({ players }) {
   } = useMutation((data) => createSession(data), {
     onSuccess: (session) => {
       queryClient.refetchQueries({ stale: true })
-      history.push(`/results/${session.id}`)
+      history.push(`/results/${getFormattedDate(session.date, false)}`)
     },
   })
 

@@ -6,16 +6,20 @@ import MatchesTable from "./MatchesTable"
 import { Loader } from "semantic-ui-react"
 import ErrorMessage from "../../components/ErrorMessage"
 import { fetchSessions } from "../../api"
+import { getFormattedDate } from "../../utilities"
 
 export default function SessionContainer(props) {
-  const { data: sessions, error, isLoading, isError } = useQuery(
-    "sessions",
-    fetchSessions
-  )
+  const {
+    data: sessions,
+    error,
+    isLoading,
+    isError,
+  } = useQuery("sessions", fetchSessions)
   let history = useHistory()
 
-  const handleSessionClick = (e, session_id) => {
-    history.push(`/results/${session_id}`)
+  const handleSessionClick = (date) => {
+    const formattedDate = getFormattedDate(date, false)
+    history.push(`/results/${formattedDate}`)
   }
 
   if (isLoading) {

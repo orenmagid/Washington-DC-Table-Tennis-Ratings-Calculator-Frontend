@@ -74,6 +74,7 @@ export const fetchSession = async (sessionId) => {
   }
 
   const session = await response.json()
+  console.log("🚀 ~ file: index.js ~ line 77 ~ fetchSession ~ session", session)
   return session
 }
 
